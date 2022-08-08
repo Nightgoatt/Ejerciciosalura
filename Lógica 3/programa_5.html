@@ -1,0 +1,73 @@
+<canvas width="600" height="400"></canvas>
+
+<script>
+
+    var pantalla = document.querySelector("canvas");
+    var pincel = pantalla.getContext("2d");
+    var radio = 10;
+    var xAleatorio;
+    var yAleatorio;
+    
+    function fondo(w, h, color) {
+        //dibuja un fondo en el canvas.
+        pincel.fillStyle = color;
+        pincel.fillRect(0, 0, w, h);
+
+    }
+    
+    function discircunferencia(x, y , radio, color) {
+        //función para graficar circulo.
+        pincel.fillStyle = color;
+        pincel.beginPath();
+        pincel.arc(x, y, radio, 0, 2*Math.PI)
+        pincel.fill();
+
+    }
+    
+    function disObjetivo(x, y) {
+        //dibuja el objetivo
+        discircunferencia(x, y, radio + 20, "red");
+        discircunferencia(x, y, radio + 10, "white");
+        discircunferencia(x, y, radio, "red");
+    }
+    
+    function sortearPosicion(maximo) {
+        //randomiza un numero.
+        return Math.floor(Math.random() * maximo);
+    }
+
+    function limpiarpantalla() {
+        //función para limpiar la pantalla.
+        pincel.clearRect(0, 0, 600, 400);
+
+    }
+
+    function actualizarPantalla() {
+        //limpia la pantalla y dibuja el circulo en posicion x,y aleatorio.
+        limpiarpantalla()
+        fondo(600, 400, "black")
+        xAleatorio = sortearPosicion(550);
+        yAleatorio = sortearPosicion(350);
+        disObjetivo(xAleatorio, yAleatorio);
+        
+    }
+    
+    function disparar(evento) {
+        //captura el disparo dentro del perimetro del circulo.
+        var x = evento.pageX - pantalla.offsetLeft;
+        var y = evento.pageY - pantalla.offsetTop;
+
+        if (
+            (x < xAleatorio + radio) &&
+            (x > xAleatorio - radio) &&
+            (y < yAleatorio + radio) &&
+            (y > yAleatorio - radio)) {
+            
+            alert("Tiro Certero!")   
+            }
+    }
+
+    setInterval(actualizarPantalla, 1000)
+
+    pantalla.onclick = disparar
+</script>

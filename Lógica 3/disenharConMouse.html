@@ -1,0 +1,87 @@
+<canvas width="600" height="400"></canvas>
+
+<script>
+    var pantalla = document.querySelector('canvas');
+    var pincel = pantalla.getContext('2d');
+
+    pincel.fillStyle = 'grey';
+    pincel.fillRect(0, 0, 600, 400);
+    var abscol = "black";
+
+    var x0 = 0;
+    var x1 = 50;
+    var x2 = 100;
+    var w = 50;
+    var h = 50;
+    var uY = 0;
+
+    var puedoDibujar = false;
+
+    function dibujarCirculo(evento) {
+
+        if(puedoDibujar) {
+            var x = evento.pageX - pantalla.offsetLeft;
+            var y = evento.pageY - pantalla.offsetTop;
+            
+            if (x < 155 && y < 55) {
+                puedoDibujar = false;
+            }
+            else {
+                pincel.fillStyle = abscol;
+                pincel.beginPath();
+                pincel.arc(x, y, 5, 0, 2 * 3.14);
+                pincel.fill();
+            }
+           
+        }
+
+    }
+
+    function cuadrados(x, y, w, h, col) {
+        pincel.fillStyle = col;
+        pincel.fillRect(x, y, w, h,);
+        pincel.fill();
+    }
+
+    function paletaColor() {
+        cuadrados(x0, uY, w, h, "red");
+        cuadrados(x1, uY, w, h, "blue");
+        cuadrados(x2, uY, w, h, "green");
+    }
+
+    function cambiarColor(evento) {
+        var x = evento.pageX - pantalla.offsetLeft;
+        var y = evento.pageY - pantalla.offsetTop;
+        console.log(evento);
+
+        if (x > x0 && x < 50 && y > uY && y < 50){
+            abscol = "red"
+        }
+
+        if (x > x1 && x < 100 && y > uY && y < 50){
+            abscol = "blue"
+        }
+
+        if (x > x2 && x < 150 && y > uY && y < 50){
+            abscol = "green"
+        }
+    }   
+
+    pantalla.onclick = cambiarColor;
+    paletaColor()
+    pantalla.onmousemove = dibujarCirculo;
+    function habilitarDibujar() {
+
+        puedoDibujar = true;
+    }
+
+    function deshabilitarDibujar() {
+
+        puedoDibujar = false;
+    }
+
+    pantalla.onmousedown = habilitarDibujar;
+
+    pantalla.onmouseup = deshabilitarDibujar;
+
+</script>

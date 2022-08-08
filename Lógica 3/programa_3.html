@@ -1,0 +1,45 @@
+<canvas width="600" height="400"></canvas>
+
+<script>
+
+    var pantalla = document.querySelector("canvas");
+    var pincel = pantalla.getContext("2d");
+
+    pincel.fillStyle = "gray";
+    pincel.fillRect(0, 0, 600, 400);
+    var colores = ["blue", "red", "green"];
+    var select = 0;
+
+    function exibirAlerta(evento){
+        //da coordenadas del click y evita los limites de la pantalla al canvas.
+        var x = evento.pageX - pantalla.offsetLeft;
+        var y = evento.pageY - pantalla.offsetTop;
+        console.log(evento);
+        alert( x + ", " + y);
+    }
+
+    function dibujarCirculo(evento){
+        //dibuja un circulo cada vez que hay un click.
+        var x = evento.pageX - pantalla.offsetLeft;
+        var y = evento.pageY - pantalla.offsetTop;
+        
+        pincel.fillStyle = colores[select];
+        pincel.beginPath();
+        pincel.arc(x, y, 10, 0, 2 * 3.14);
+        pincel.fill();
+        console.log(x + ", " + y);
+    }
+    
+    function cambiarColor(){
+        //añade 1 a la selección y cambia el color con el click derecho
+        select = select + 1;
+        console.log(select)
+        if (select >= 3){
+            select = 0;
+        }
+    }
+
+
+    pantalla.onclick = dibujarCirculo;
+    pantalla.oncontextmenu = cambiarColor;
+</script>
