@@ -1,0 +1,25 @@
+<meta charset="UTF-8">
+
+<h1>PRUEBA DE CONDUCIR</h1>
+	<script>
+		    
+	function saltarLinea() {
+		document.write("<br>");
+	}
+
+    function imprimir(frase) {
+		document.write(frase);
+		saltarLinea();
+		}
+
+    var edad = parseInt(prompt("¿Cuál es tu edad?"));
+    var tieneLicencia = prompt("¿Tienes licencia? Responde S o N");
+	
+	if (edad >= 18 && tieneLicencia.toLowerCase() == "s") {
+		imprimir("!Puedes conducir! :)");
+	}
+	
+	else {
+		imprimir("Lo sentimos, no puedes conducir :(");
+	}
+	</script>
